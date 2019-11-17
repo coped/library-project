@@ -10,6 +10,10 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
+Book.prototype.toggleRead = function() {
+    this.read = (this.read) ? false : true;
+}
+
 function addBookToLibrary() {
     const parseTitle = () => {
         const response = prompt("Book title?");
@@ -46,8 +50,7 @@ function addBookToLibrary() {
                 return parseRead();
         }
     }
-
-    const parseInput = () => {
+    const parseUserInput = () => {
         const title = parseTitle();
         if (title === null) return false;
         const author = parseAuthor();
@@ -60,7 +63,7 @@ function addBookToLibrary() {
         return [title, author, pages, read];
     }
 
-    const parsedInput = parseInput();
+    const parsedInput = parseUserInput();
 
     if (parsedInput) {
         const newBook = new Book(...parsedInput)
@@ -71,15 +74,15 @@ function addBookToLibrary() {
     }
 }
 
-const deleteBook = (e) => {
+const deleteBookButton = (e) => {
     const bookId = Number(e.target.parentNode.parentNode.parentNode.id.slice(-1));
     myLibrary.splice(bookId, 1);
     render(myLibrary);
 }
 
-const toggleRead = (e) => {
+const toggleReadButton = (e) => {
     const bookId = Number(e.target.parentNode.parentNode.parentNode.id.slice(-1));
-    myLibrary[bookId]["read"] = !myLibrary[bookId]["read"];
+    myLibrary[bookId].toggleRead();
     render(myLibrary);
 }
 
@@ -119,13 +122,13 @@ const createCard = (bookTitle, bookAuthor, bookPages, bookRead, index) => {
     cardFooter.appendChild(cardFooterItem1);
 
     const cardFooterItem2 = document.createElement("button");
-    cardFooterItem2.addEventListener("click", toggleRead);
+    cardFooterItem2.addEventListener("click", toggleReadButton);
     cardFooterItem2.className = "card-footer-item button is-link is-inverted";
     cardFooterItem2.textContent = (bookRead) ? "Status: read" : "Status: unread";
     cardFooter.appendChild(cardFooterItem2);
 
     const cardFooterItem3 = document.createElement("button");
-    cardFooterItem3.addEventListener("click", deleteBook);
+    cardFooterItem3.addEventListener("click", deleteBookButton);
     cardFooterItem3.className = "card-footer-item button is-danger is-inverted";
     cardFooterItem3.textContent = "Delete";
     cardFooter.appendChild(cardFooterItem3);
@@ -141,4 +144,3 @@ const render = (library) => {
 
 document.getElementById("add-book").addEventListener("click", addBookToLibrary);
 render(myLibrary); 
-
