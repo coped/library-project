@@ -22,29 +22,31 @@ export default (bookTitle, bookAuthor, bookPages, bookRead, index) => {
     title.textContent = bookTitle;
     cardContent.appendChild(title);
 
-    const subtitle = document.createElement("p");
-    subtitle.className = "subtitle";
-    subtitle.textContent = `Author: ${bookAuthor}`;
-    cardContent.appendChild(subtitle);
+    const author = document.createElement("p");
+    author.className = "subtitle";
+    author.textContent = `Author: ${bookAuthor}`;
+    cardContent.appendChild(author);
 
     const cardFooter = document.createElement("footer");
     cardFooter.className = "card-footer";
     card.appendChild(cardFooter);
 
-    const cardFooterItem1 = document.createElement("p");
-    cardFooterItem1.className = "card-footer-item";
-    cardFooterItem1.textContent = `Pages: ${bookPages}`;
-    cardFooter.appendChild(cardFooterItem1);
+    const pages = document.createElement("p");
+    pages.className = "card-footer-item";
+    pages.textContent = `Pages: ${bookPages}`;
+    cardFooter.appendChild(pages);
 
-    const cardFooterItem2 = document.createElement("button");
-    cardFooterItem2.addEventListener("click", toggleReadButton);
-    cardFooterItem2.className = "card-footer-item button is-link is-inverted";
-    cardFooterItem2.textContent = (bookRead) ? "Status: read" : "Status: unread";
-    cardFooter.appendChild(cardFooterItem2);
+    const toggleRead = document.createElement("button");
+    toggleRead.id = bookTitle
+    toggleRead.addEventListener("click", toggleReadButton);
+    toggleRead.className = "card-footer-item button is-link is-inverted";
+    toggleRead.textContent = (bookRead) ? "Status: read" : "Status: unread";
+    cardFooter.appendChild(toggleRead);
 
-    const cardFooterItem3 = document.createElement("button");
-    cardFooterItem3.addEventListener("click", deleteBookButton);
-    cardFooterItem3.className = "card-footer-item button is-danger is-inverted";
-    cardFooterItem3.textContent = "Delete";
-    cardFooter.appendChild(cardFooterItem3);
+    const deleteButton = document.createElement("button");
+    deleteButton.id = bookTitle
+    deleteButton.addEventListener("click", deleteBookButton);
+    deleteButton.className = "card-footer-item button is-danger is-inverted";
+    deleteButton.textContent = "Delete";
+    cardFooter.appendChild(deleteButton);
 };
